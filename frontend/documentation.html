@@ -4,45 +4,170 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Platform Documentation</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .dashboard-header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dashboard-header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .dashboard-header button {
+            padding: 0.5rem 1rem;
+            background-color: #3498db;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .doc-container {
+            display: flex;
+            height: calc(100vh - 72px);
+        }
+
+        .doc-sidebar {
+            width: 250px;
+            background-color: #ecf0f1;
+            padding: 1rem;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-item {
+            padding: 0.75rem 1rem;
+            margin: 0.5rem 0;
+            cursor: pointer;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-item.active, .nav-item:hover {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .doc-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .api-endpoint {
+            background: #f4f4f4;
+            border-left: 4px solid #3498db;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .method-post {
+            background-color: #2ecc71;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .method-get {
+            background-color: #e67e22;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        /* Mobile Styles */
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .doc-container {
+                flex-direction: column;
+            }
+
+            .doc-sidebar {
+                position: absolute;
+                top: 72px;
+                left: -300px;
+                height: calc(100vh - 72px);
+                width: 250px;
+                background: #ecf0f1;
+                transition: left 0.3s ease;
+                z-index: 999;
+            }
+
+            .doc-sidebar.open {
+                left: 0;
+            }
+
+            .doc-content {
+                padding: 1rem;
+            }
+
+            .menu-toggle {
+                display: block;
+                color: white;
+                margin-left: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <header class="dashboard-header"> 
-        <h1><i class="fas fa-book"></i> Platform Documentation</h1>
-        <div> <button onclick="window.location.href='dashboard.html'"><i class="fas fa-arrow-left"></i> Back to Dashboard</button> </div>
+        <div style="display: flex; align-items: center;">
+            <span class="menu-toggle" style="margin-right: 20px; margin-left: 8px;" onclick="toggleSidebar()"><i class="fas fa-bars"></i></span>
+            <h1><i class="fas fa-book" style="margin-left: 1rem;"></i> Platform Documentation</h1>
+        </div>
+        <div>
+            <button onclick="window.location.href='index.html'"><i class="fas fa-arrow-left"></i> Back to Login</button>
+        </div>
     </header>
+
     <div class="doc-container">
-        <div class="doc-sidebar">
-            <div class="nav-item active" onclick="showSection('user-guide')">
+        <div class="doc-sidebar" id="sidebar">
+            <div class="nav-item active" onclick="showSection('user-guide', this)">
                 <i class="fas fa-user"></i> User Guide
             </div>
-            <div class="nav-item" onclick="showSection('api-docs')">
+            <div class="nav-item" onclick="showSection('api-docs', this)">
                 <i class="fas fa-code"></i> API Documentation
             </div>
-            <div class="nav-item" onclick="showSection('tech-docs')">
+            <div class="nav-item" onclick="showSection('tech-docs', this)">
                 <i class="fas fa-cogs"></i> Technical Documentation
             </div>
-            <div class="nav-item" onclick="showSection('faq')">
+            <div class="nav-item" onclick="showSection('faq', this)">
                 <i class="fas fa-question-circle"></i> FAQ
             </div>
         </div>
-        
+
         <div class="doc-content">
             <!-- User Guide Section -->
             <div id="user-guide" class="doc-section">
                 <h2><i class="fas fa-user"></i> User Guide</h2>
-                
                 <h3>Getting Started</h3>
                 <p>Welcome to the Crowdsourced Disaster Relief Platform. This guide will help you navigate and use the platform effectively.</p>
-                
                 <h3>Registration</h3>
                 <p>To use the platform, you need to register as either a:</p>
                 <ul>
                     <li><strong>Victim</strong> - Can report disasters and request help</li>
                     <li><strong>Volunteer</strong> - Can view and respond to help requests</li>
                 </ul>
-                
                 <h3>Reporting a Disaster</h3>
                 <ol>
                     <li>Navigate to the Dashboard</li>
@@ -51,7 +176,6 @@
                     <li>Specify the type of assistance needed</li>
                     <li>Submit the report</li>
                 </ol>
-                
                 <h3>Responding to Requests</h3>
                 <p>As a volunteer, you can:</p>
                 <ul>
@@ -61,30 +185,28 @@
                     <li>Mark requests as completed</li>
                 </ul>
             </div>
-            
+
             <!-- API Documentation Section -->
             <div id="api-docs" class="doc-section" style="display:none;">
                 <h2><i class="fas fa-code"></i> API Documentation</h2>
-                
                 <h3>Authentication</h3>
                 <p>All API endpoints (except login/register) require a JWT token in the Authorization header.</p>
-                
                 <h3>Endpoints</h3>
-                
+
                 <div class="api-endpoint">
                     <span class="method-post">POST</span> /register<br>
                     <strong>Description:</strong> Register a new user<br>
                     <strong>Request Body:</strong> { username, email, password, user_role }<br>
                     <strong>Response:</strong> { message }
                 </div>
-                
+
                 <div class="api-endpoint">
                     <span class="method-post">POST</span> /login<br>
                     <strong>Description:</strong> Authenticate user<br>
                     <strong>Request Body:</strong> { email, password }<br>
                     <strong>Response:</strong> { token, user_role, username }
                 </div>
-                
+
                 <div class="api-endpoint">
                     <span class="method-post">POST</span> /report-disaster<br>
                     <strong>Description:</strong> Report a new disaster<br>
@@ -92,18 +214,17 @@
                     <strong>Headers:</strong> Authorization: Bearer [token]<br>
                     <strong>Response:</strong> { message }
                 </div>
-                
+
                 <div class="api-endpoint">
                     <span class="method-get">GET</span> /all-help-requests<br>
                     <strong>Description:</strong> Get all help requests<br>
                     <strong>Response:</strong> Array of request objects
                 </div>
             </div>
-            
+
             <!-- Technical Documentation Section -->
             <div id="tech-docs" class="doc-section" style="display:none;">
                 <h2><i class="fas fa-cogs"></i> Technical Documentation</h2>
-                
                 <h3>System Architecture</h3>
                 <p>The platform consists of:</p>
                 <ul>
@@ -112,9 +233,7 @@
                     <li><strong>Database:</strong> MySQL</li>
                     <li><strong>Real-time:</strong> WebSocket for alerts</li>
                 </ul>
-                
                 <h3>Dependencies</h3>
-                <p>Key dependencies include:</p>
                 <ul>
                     <li>express</li>
                     <li>mysql2</li>
@@ -123,7 +242,6 @@
                     <li>ws</li>
                     <li>leaflet</li>
                 </ul>
-                
                 <h3>Installation</h3>
                 <ol>
                     <li>Clone the repository</li>
@@ -133,44 +251,47 @@
                     <li>Run <code>node server.js</code></li>
                 </ol>
             </div>
-            
+
             <!-- FAQ Section -->
             <div id="faq" class="doc-section" style="display:none;">
                 <h2><i class="fas fa-question-circle"></i> Frequently Asked Questions</h2>
-                
                 <h3>How do I reset my password?</h3>
                 <p>Currently, password reset functionality is not implemented. Contact support for assistance.</p>
-                
                 <h3>Why can't I see any disasters on the map?</h3>
                 <p>Make sure you're zoomed in enough and that there are active disasters in your area. Try refreshing the page.</p>
-                
                 <h3>How accurate is the location data?</h3>
                 <p>Location accuracy depends on the information provided by users reporting disasters.</p>
-                
                 <h3>Is my data secure?</h3>
                 <p>We use industry-standard encryption for passwords and sensitive data. However, as this is a demo project, don't use real personal information.</p>
-                
                 <h3>Can I use this platform for real emergencies?</h3>
                 <p>This is a demonstration project only. For real emergencies, contact local authorities.</p>
             </div>
         </div>
     </div>
-    
+
     <script>
-        function showSection(sectionId) {
+        function showSection(sectionId, clickedItem) {
             // Hide all sections
             document.querySelectorAll('.doc-section').forEach(section => {
                 section.style.display = 'none';
             });
-            
+
             // Show selected section
             document.getElementById(sectionId).style.display = 'block';
-            
+
             // Update active nav item
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
             });
-            event.currentTarget.classList.add('active');
+            clickedItem.classList.add('active');
+
+            // Close sidebar on mobile
+            document.getElementById('sidebar').classList.remove('open');
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
         }
     </script>
 </body>

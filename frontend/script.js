@@ -283,3 +283,27 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Ensure forms are properly aligned
+    const centerForms = () => {
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        
+        if (loginForm) {
+            loginForm.style.margin = '0 auto';
+            loginForm.style.maxWidth = '100%';
+        }
+        
+        if (registerForm) {
+            registerForm.style.margin = '0 auto';
+            registerForm.style.maxWidth = '100%';
+        }
+    };
+    
+    centerForms();
+    
+    // Adjust for window resize
+    window.addEventListener('resize', centerForms);
+});

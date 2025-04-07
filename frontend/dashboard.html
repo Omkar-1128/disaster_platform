@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Disaster Relief Dashboard</title>
+  <link href="style.css" rel="stylesheet"/>
+  <link href="style2.css" rel="stylesheet"/>
+  <link href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="dashboard-page">
+
+<header class="dashboard-header custom-navbar compact-navbar">
+  <h1><i class="fas fa-house-damage"></i> Disaster Relief Platform</h1>
+  <a href="documentation.html" class="hide-on-mobile" style="color: white; margin-right: 20px; text-decoration: none;">
+    <i class="fas fa-book"></i> Docs
+  </a>
+  <div>
+    <span class="user-greeting">Welcome, <span id="user-name"></span>! <span id="user-role-badge"></span></span>
+    <button id="logout-button"><i class="fas fa-sign-out-alt"></i> Logout</button>
+  </div>
+</header>
+
+<!-- Alert Container -->
+<div class="alert-container" id="alert-container"></div>
+
+<!-- Quick Stats -->
+<div class="stats-container top-margin">
+  <div class="stat-card">
+    <i class="fas fa-exclamation-triangle" style="color: #e74c3c;"></i>
+    <div class="stat-value" id="active-disasters">0</div>
+    <div class="stat-label">Active Disasters</div>
+  </div>
+  <div class="stat-card">
+    <i class="fas fa-people-carry" style="color: #27ae60;"></i>
+    <div class="stat-value" id="total-volunteers">0</div>
+    <div class="stat-label">Volunteers</div>
+  </div>
+  <div class="stat-card">
+    <i class="fas fa-utensils" style="color: #f39c12;"></i>
+    <div class="stat-value" id="food-requests">0</div>
+    <div class="stat-label">Food Requests</div>
+  </div>
+  <div class="stat-card">
+    <i class="fas fa-medkit" style="color: #3498db;"></i>
+    <div class="stat-value" id="medical-requests">0</div>
+    <div class="stat-label">Medical Needs</div>
+  </div>
+</div>
+
+<section class="report-container weather-section">
+  <h2><i class="fas fa-cloud-sun-rain"></i> Weather Alerts</h2>
+  <div id="weather-alerts-container">
+    <div class="weather-current">
+      <div class="weather-loading">
+        <div class="spinner"></div> Loading weather data...
+      </div>
+      <div class="weather-main" style="display: none;">
+        <div class="weather-icon-container">
+          <img alt="Weather icon" id="weather-icon" src=""/>
+          <span id="weather-temp"></span>
+        </div>
+        <div class="weather-details">
+          <p id="weather-condition"></p>
+          <p id="weather-location"></p>
+        </div>
+      </div>
+    </div>
+    <div id="weather-alerts"></div>
+  </div>
+</section>
+
+<main>
+  <section class="report-container">
+    <h2><i class="fas fa-edit"></i> Report a Disaster</h2>
+    <form id="disaster-report-form">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="disaster-type"><i class="fas fa-bolt"></i> Disaster Type*</label>
+          <select id="disaster-type" required>
+            <option value="">Select type</option>
+            <option value="Earthquake">Earthquake</option>
+            <option value="Flood">Flood</option>
+            <option value="Cyclone">Cyclone</option>
+            <option value="Fire">Fire</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="request-type"><i class="fas fa-hands-helping"></i> Assistance Needed*</label>
+          <select id="request-type" required>
+            <option value="">Select assistance</option>
+            <option value="Food">Food</option>
+            <option value="Shelter">Shelter</option>
+            <option value="Medical">Medical</option>
+          </select>
+        </div>
+        <div class="form-group form-full-width">
+          <label for="location"><i class="fas fa-map-marker-alt"></i> Location*</label>
+          <input class="form-control custom-input" id="location" placeholder="Enter city, state or exact address" required type="text"/>
+        </div>
+        <div class="form-group form-full-width">
+          <label for="description"><i class="fas fa-info-circle"></i> Description*</label>
+          <textarea class="form-control custom-textarea" id="description" placeholder="Please provide details about the disaster, number of people affected, and specific needs" required rows="4"></textarea>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="submit-btn" id="submit-btn" type="submit">
+          <i class="fas fa-paper-plane"></i> Submit Report
+        </button>
+        <button class="emergency-btn pulse" id="call-for-help" type="button">
+          <i class="fas fa-phone-alt"></i> Emergency Call
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Live Map Section -->
+  <section class="report-container" id="map-container">
+    <h2><i class="fas fa-map-marked-alt"></i> Live Disaster Map</h2>
+    <div id="map"></div>
+  </section>
+
+  <!-- Recent Reports Table -->
+  <section class="report-container">
+    <h2><i class="fas fa-list"></i> Recent Reports</h2>
+    <div style="overflow-x: auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Disaster</th>
+            <th>Location</th>
+            <th>Assistance</th>
+            <th>Reported</th>
+          </tr>
+        </thead>
+        <tbody id="recent-reports-body">
+          <!-- Reports will be loaded here -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+<script src="map.js"></script>
+<script src="script2.js"></script>
+<div class="docs-button" onclick="window.location.href='documentation.html'">
+  <i class="fas fa-book"></i>
+</div>
+</body>
+</html>

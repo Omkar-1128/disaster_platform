@@ -1,0 +1,349 @@
+/* Dashboard-specific styles */
+body.dashboard-page {
+    padding-top: 70px;
+}
+
+.dashboard-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 60px;
+    background: #2c3e50;
+    color: white;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Emergency header animation */
+@keyframes emergencyFlash {
+    0%, 100% { box-shadow: 0 0 10px 0 rgba(231, 76, 60, 0); }
+    50% { box-shadow: 0 0 20px 10px rgba(231, 76, 60, 0.3); }
+}
+
+.emergency-active {
+    animation: emergencyFlash 2s infinite;
+}
+
+/* Disaster type indicators */
+.disaster-indicator {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.earthquake { background-color: #e74c3c; }
+.flood { background-color: #3498db; }
+.cyclone { background-color: #9b59b6; }
+.fire { background-color: #f39c12; }
+.other { background-color: #95a5a6; }
+
+/* Stats cards */
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin: 10px 0;
+}
+
+.stat-label {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+/* Emergency button pulse */
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); }
+    70% { box-shadow: 0 0 0 15px rgba(231, 76, 60, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+/* Map container */
+#map-container {
+    margin-top: 80px;
+    padding: 20px;
+}
+
+#map {
+    height: 550px;
+    border-radius: 10px;
+    border: 3px solid #2c3e50;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+}
+
+/* Report container */
+.report-container {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 1200px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .stats-container {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    #map {
+        height: 400px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-header h1 {
+        font-size: 1.4rem;
+    }
+}
+
+/* Add to style2.css */
+
+/* Dashboard header alignment */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+}
+/* Improved Dashboard Header for Mobile */
+.dashboard-header {
+    flex-wrap: wrap;
+    padding: 10px 15px;
+    height: auto;
+    min-height: 60px;
+    gap: 10px;
+}
+
+.dashboard-header > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-greeting {
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+}
+
+#logout-button {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+}
+
+@media (max-width: 480px) {
+    .dashboard-header {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 8px 10px;
+    }
+    
+    .dashboard-header h1 {
+        font-size: 1.2rem;
+        margin-right: auto;
+    }
+    
+    .user-greeting {
+        display: none;
+    }
+    
+    #logout-button {
+        margin-left: auto;
+    }
+    
+    .stats-container {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .stat-card {
+        padding: 10px;
+    }
+    
+    .stat-value {
+        font-size: 1.5rem;
+    }
+}
+
+/* Form grid alignment */
+.form-grid {
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+/* Button alignment */
+.form-actions {
+    justify-content: center;
+    gap: 15px;
+}
+
+/* Table alignment */
+#recent-reports-body td {
+    vertical-align: middle;
+}
+
+/* Weather section alignment */
+.weather-section {
+    text-align: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .dashboard-header {
+        flex-direction: column;
+        padding: 15px;
+        height: auto;
+    }
+    
+    .dashboard-header > * {
+        margin: 5px 0;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-full-width {
+        grid-column: 1;
+    }
+}
+
+
+
+/* Custom form input styles */
+.custom-input,
+.custom-textarea {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.custom-input:focus,
+.custom-textarea:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+  background-color: #fff;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+
+/* Ensure the form container and inputs don't overflow */ 
+.form-container {
+  max-width: 100%;
+  padding-right: 10px;
+  padding-left: 10px;
+  box-sizing: border-box;
+}
+
+.custom-input,
+.custom-textarea {
+  box-sizing: border-box;
+}
+
+
+/* Hide documentation link on small screens */
+@media (max-width: 768px) {
+  .hide-on-mobile {
+    display: none;
+  }
+}
+
+
+/* Reduce navbar height and padding */
+.navbar {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    min-height: 50px;
+  }
+  
+  /* Shrink logo/text inside navbar */
+  .navbar-brand,
+  .navbar-nav > li > a {
+    font-size: 1rem;
+  }
+  
+  /* Reduce margin below navbar if needed */
+  .navbar + .container,
+  .navbar + .content-wrapper {
+    margin-top: 10px !important;
+  }
+
+  /* Shrink the navbar height and padding */
+.compact-navbar {
+    padding: 8px 16px;
+    min-height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  /* Smaller text on small screens */
+  @media (max-width: 768px) {
+    .compact-navbar h1 {
+      font-size: 1.1rem;
+    }
+  
+    .docs-link {
+      display: none;
+    }
+  }
+  
+  /* Add top margin under navbar to push stats below */
+  .top-margin {
+    margin-top: 12px;
+  }
+  
